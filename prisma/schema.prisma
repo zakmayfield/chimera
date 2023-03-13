@@ -35,6 +35,7 @@ model Password {
   userId String @unique
 }
 
+// Note model will stay in tact til a bit later in development
 model Note {
   id    String @id @default(cuid())
   title String
@@ -46,11 +47,6 @@ model Note {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String
 }
-
-
-
-
-
 
 model Address {
   id String @id @default(uuid())
