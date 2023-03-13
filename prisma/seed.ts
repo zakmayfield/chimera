@@ -1,42 +1,90 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import { catBreeds, dogBreeds, horseBreeds } from "./seedData";
 
 const prisma = new PrismaClient();
 
+enum Species {
+  DOG = "DOG",
+  CAT = "CAT",
+  HORSE = "HORSE",
+}
+
+async function createBreed(breed: string, species: Species) {
+  await prisma.breed.create({
+    data: {
+      breed: breed.toLowerCase(),
+      species,
+    },
+  });
+}
+
+async function breedCreator() {
+  let dog = dogBreeds.map(async (breed) => {
+    await createBreed(breed, Species.DOG);
+  });
+
+  let cat = catBreeds.map(async (breed) => {
+    await createBreed(breed, Species.CAT);
+  });
+
+  let horse = horseBreeds.map(async (breed) => {
+    await createBreed(breed, Species.HORSE);
+  });
+
+  return {
+    dog,
+    cat,
+    horse,
+  };
+}
+
 async function seed() {
-  const email = "rachel@remix.run";
+  await breedCreator()
+
+  const userData = {
+    name: "Saaratha Searingheart",
+    username: "searingheart",
+    email: "email-1@email.com",
+    password: "123",
+  };
+  const { name, username, email, password } = userData;
+
+  
 
   // cleanup the existing database
   await prisma.user.delete({ where: { email } }).catch(() => {
     // no worries if it doesn't exist yet
   });
 
-  const hashedPassword = await bcrypt.hash("racheliscool", 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  const user = await prisma.user.create({
+  await prisma.user.create({
     data: {
+      name,
       email,
+      username,
       password: {
         create: {
           hash: hashedPassword,
         },
       },
-    },
-  });
-
-  await prisma.note.create({
-    data: {
-      title: "My first note",
-      body: "Hello, world!",
-      userId: user.id,
-    },
-  });
-
-  await prisma.note.create({
-    data: {
-      title: "My second note",
-      body: "Hello, world!",
-      userId: user.id,
+      pets: {
+        create: [
+          {
+            name: "Gloopus",
+            species: "DOG",
+          },
+          {
+            name: "Ham",
+            species: "CAT",
+          },
+          {
+            name: "Rusty",
+            species: "HORSE",
+          },
+        ],
+      },
     },
   });
 
