@@ -21,7 +21,7 @@ export async function action({ request }: ActionArgs) {
   const username = formData.get("username");
   const email = formData.get("email");
   const password = formData.get("password");
-  const type = formData.get("type") ?? '';
+  const type = formData.get("type");
 
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
 
