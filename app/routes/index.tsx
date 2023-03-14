@@ -1,4 +1,5 @@
 import { Link } from "@remix-run/react";
+import dogs from '~/images/dogs.jpg'
 
 import { useOptionalUser } from "~/utils/utils";
 
@@ -12,7 +13,7 @@ export default function Index() {
             <div className="absolute inset-0">
               <img
                 className="h-full w-full object-cover"
-                src="https://user-images.githubusercontent.com/1500684/158276320-c46b661b-8eff-4a4d-82c6-cf296c987a12.jpg"
+                src={dogs}
                 alt="BB King playing blues on his Les Paul guitar"
               />
               <div className="absolute inset-0 bg-[color:rgba(27,167,254,0.5)] mix-blend-multiply" />
