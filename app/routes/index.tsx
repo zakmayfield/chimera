@@ -14,14 +14,14 @@ export default function Index() {
               <img
                 className="h-full w-full object-cover"
                 src={dogs}
-                alt="BB King playing blues on his Les Paul guitar"
+                alt="A pack of puppies lounging on stone steps"
               />
               <div className="absolute inset-0 bg-[color:rgba(27,167,254,0.5)] mix-blend-multiply" />
             </div>
             <div className="relative px-4 pt-16 pb-8 sm:px-6 sm:pt-24 sm:pb-14 lg:px-8 lg:pb-20 lg:pt-32">
               <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
-                <span className="block uppercase text-blue-500 drop-shadow-md">
-                  Blues Stack
+                <span className="block uppercase text-white drop-shadow-md">
+                  Chimera
                 </span>
               </h1>
               <p className="mx-auto mt-6 max-w-lg text-center text-xl text-white sm:max-w-3xl">
