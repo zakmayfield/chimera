@@ -47,25 +47,36 @@ export default function App() {
         {/* Universal Navbar */}
         <div className="flex gap-2.5 py-3 px-4 sm:py-0">
           {/* logo container */}
-          <div className="w-full border-2">
-            <img className="w-4/12 border-2" src={acme} alt="lion head logo" />
+          <div className="w-xs">
+            <Link to="/">
+              <img src={acme} alt="acme logo" />
+            </Link>
           </div>
 
-          {/* auth container */}
-          {data.user && (
-            <div className="hidden w-full text-sm sm:flex sm:items-center sm:justify-end">
-              <p>Hello, {data.user.name}</p>
-            </div>
-          )}
+          <div className="flex w-full">
+            {/* auth container */}
+            {data.user && (
+              <div className="hidden flex-1 pr-3 text-sm sm:flex sm:items-center sm:justify-end">
+                <p>
+                  <Link
+                    to={`dashboard/${data.user.id}`}
+                    className="p-1 text-lg text-gray-700"
+                  >
+                    @{data.user.username ? data.user.username : data.user.name}
+                  </Link>
+                </p>
+              </div>
+            )}
 
-          {/* cta container */}
-          <div className="flex items-center justify-end text-3xl">
-            <Link to="/saved" className="mr-5">
-              <AiOutlineHeart />
-            </Link>
+            {/* cta container */}
+            <div className="flex items-center justify-end text-3xl">
+              <Link to="/saved" className="mr-5">
+                <AiOutlineHeart />
+              </Link>
 
-            <div>
-              <AiOutlineMenu />
+              <div>
+                <AiOutlineMenu />
+              </div>
             </div>
           </div>
         </div>
