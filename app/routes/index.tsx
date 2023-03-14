@@ -9,7 +9,7 @@ export default function Index() {
     <main className="relative min-h-screen bg-white sm:flex sm:justify-center">
       <div className="relative sm:pb-16">
         {/* Landing page top content */}
-        <div className="mx-auto w-full">
+        <div className=" w-full">
           <div className="relative shadow-xl sm:overflow-hidden">
             {/* image container | absolute for background image, setting t r b l: 0 */}
             <div className="absolute inset-0">

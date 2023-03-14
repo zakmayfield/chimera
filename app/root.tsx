@@ -53,7 +53,7 @@ export default function App() {
             </Link>
           </div>
 
-          <div className="flex w-full">
+          <div className="flex w-full justify-end">
             {/* auth container */}
             {data.user && (
               <div className="hidden flex-1 pr-3 text-sm sm:flex sm:items-center sm:justify-end">
