@@ -104,6 +104,9 @@ model Pet {
 
   agency   User?   @relation(fields: [agencyId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   agencyId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model SavedPetRecord {
