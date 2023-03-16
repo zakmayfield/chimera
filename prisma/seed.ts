@@ -1,8 +1,26 @@
 import { AccountType, PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
-import { catBreeds, dogBreeds, horseBreeds } from "./seedData";
+import { catBreeds, dogBreeds, horseBreeds, tagList } from "./seedData";
 
 const prisma = new PrismaClient();
+
+async function createTag(content: string) {
+  await prisma.tag.create({
+    data: {
+      content,
+    },
+  });
+}
+
+async function tagCreator() {
+  let tags = tagList.map(async (tag: string) => {
+    await createTag(tag);
+  });
+
+  return {
+    tags,
+  };
+}
 
 enum Species {
   DOG = "DOG",
@@ -41,6 +59,7 @@ async function breedCreator() {
 
 async function seed() {
   await breedCreator();
+  await tagCreator();
 
   const userData = {
     name: "Saaratha Searingheart",
@@ -48,7 +67,7 @@ async function seed() {
     email: "email-1@email.com",
     password: "123",
     type: AccountType.AGENCY,
-    bio: 'Organization dedicated to pet rehoming'
+    bio: "Organization dedicated to pet rehoming",
   };
   const { name, username, email, password, type, bio } = userData;
 
@@ -159,7 +178,7 @@ async function seed() {
       contact: {
         create: {
           email: userData.email,
-          phone: {
+          phones: {
             create: [
               {
                 number: "513-123-4567",

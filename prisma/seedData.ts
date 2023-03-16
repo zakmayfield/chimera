@@ -1,3 +1,18 @@
+export const tagList = [
+  'CUTE',
+  'INTELLIGENT',
+  'LARGE',
+  'PLAYFUL',
+  'HAPPY',
+  'AFFECTIONATE',
+  'SILLY',
+  'ENERGETIC',
+  'HIGH_OCTANE',
+  'LAZY',
+  'CALM',
+  'QUIET'
+]
+
 const dogBreeds = [
   'Affenpinscher',
   'Afghan Hound',
