@@ -2,7 +2,6 @@ import { AccountType, PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { catBreeds, dogBreeds, horseBreeds } from "./seedData";
 
-
 const prisma = new PrismaClient();
 
 enum Species {
@@ -59,8 +58,6 @@ async function seed() {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  
-
   await prisma.user.create({
     data: {
       name,
@@ -107,7 +104,7 @@ async function seed() {
           {
             name: "Ham",
             species: "CAT",
-            bio: "Ham is a fantastic cat who likes to chase lasers and perch up high.",
+            bio: "Ham is a great cat who likes to chase lasers and perch up high.",
             description: "Ham the energetic cat.",
             age: "ADULT",
             sex: "FEMALE",
@@ -136,8 +133,8 @@ async function seed() {
           {
             name: "Rusty",
             species: "HORSE",
-            bio: "Rusty is a fantastic horse who likes to chase lasers and perch up high.",
-            description: "Rusty the energetic horse.",
+            bio: "Rusty is an awesome horse who likes to eat hay.",
+            description: "Rusty the lovely horse.",
             age: "YOUNG",
             sex: "MALE",
             status: "ADOPTABLE",
