@@ -127,7 +127,6 @@ enum Species {
   BARNYARD
 }
 enum Age {
-  PUPPY
   YOUNG
   ADULT
   SENIOR

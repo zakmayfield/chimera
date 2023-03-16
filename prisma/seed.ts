@@ -40,17 +40,16 @@ async function breedCreator() {
 }
 
 async function seed() {
-  await breedCreator()
+  await breedCreator();
 
   const userData = {
     name: "Saaratha Searingheart",
     username: "searingheart",
     email: "email-1@email.com",
     password: "123",
+    type: "AGENCY",
   };
   const { name, username, email, password } = userData;
-
-  
 
   // cleanup the existing database
   await prisma.user.delete({ where: { email } }).catch(() => {
@@ -74,14 +73,83 @@ async function seed() {
           {
             name: "Gloopus",
             species: "DOG",
+            bio: "Gloopus is a fantastic dog who likes to run fast and go far. Always reaching for the horizon.",
+            description: "Gloopus the fantastic dog.",
+            age: "YOUNG",
+            sex: "MALE",
+            size: "LG",
+            coat: "SHORT",
+            status: "ADOPTABLE",
+
+            colors: {
+              create: {
+                primary: "white",
+              },
+            },
+            attributes: {
+              create: {
+                isHouseTrained: true,
+                hasCurrentShots: true,
+              },
+            },
+            environment: {
+              create: {
+                cats: true,
+                dogs: true,
+                children: true,
+              },
+            },
           },
           {
             name: "Ham",
             species: "CAT",
+            bio: "Ham is a fantastic cat who likes to chase lasers and perch up high.",
+            description: "Ham the energetic cat.",
+            age: "ADULT",
+            sex: "FEMALE",
+            size: "SM",
+            coat: "MEDIUM",
+            status: "ADOPTABLE",
+
+            colors: {
+              create: {
+                primary: "orange",
+                secondary: "white",
+              },
+            },
+            attributes: {
+              create: {
+                isHouseTrained: true,
+                hasCurrentShots: true,
+              },
+            },
+            environment: {
+              create: {
+                dogs: true,
+              },
+            },
           },
           {
             name: "Rusty",
             species: "HORSE",
+            bio: "Rusty is a fantastic horse who likes to chase lasers and perch up high.",
+            description: "Rusty the energetic horse.",
+            age: "YOUNG",
+            sex: "MALE",
+            status: "ADOPTABLE",
+
+            colors: {
+              create: {
+                primary: "brown",
+                secondary: "black",
+                tertiary: "white",
+              },
+            },
+            attributes: {
+              create: {
+                hasCurrentShots: true,
+              },
+            },
           },
         ],
       },
