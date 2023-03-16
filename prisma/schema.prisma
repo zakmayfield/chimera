@@ -8,24 +8,27 @@ generator client {
 }
 
 model User {
-  id       String      @id @default(cuid())
+  id String @id @default(cuid())
 
   // add name, username & type attributes to various forms and inputs, ect
   name     String
   email    String      @unique
   username String?     @unique
+  bio      String?
   type     AccountType @default(DEFAULT)
-  
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   password Password?
-  profile UserProfile?
 
   pets      Pet[]
   savedPets SavedPetRecord[]
+
+  address Address[]
+  contact Contact?
   // notes will be kept in tact until new models and routes have been created
-  notes    Note[]
+  notes   Note[]
 }
 
 model Password {
@@ -48,6 +51,11 @@ model Note {
   userId String
 }
 
+// // address with two options for address slots
+// model Address {
+//    primary AddressType
+//    secondary AddressType
+// }
 model Address {
   id String @id @default(uuid())
 
@@ -55,23 +63,30 @@ model Address {
   apartment String? @db.VarChar(25)
   city      String  @db.VarChar(50)
   state     String  @db.VarChar(50)
-  zip       Int
+  zip       String
   country   String  @db.VarChar(100)
 
-  userProfile UserProfile? @relation(fields: [userProfileId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
-  userProfileId String? @unique
+  userId String? @unique
 }
 
 model Contact {
   id String @id @default(uuid())
 
-  phone String? @db.VarChar(50)
-  email String? @db.VarChar(75)
+  phones Phone[]
+  email  String? @db.VarChar(75)
 
-  userProfile UserProfile? @relation(fields: [userProfileId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user   User?   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  userId String? @unique
+}
 
-  userProfileId String? @unique
+model Phone {
+  id     String @id @default(uuid())
+  number String
+
+  contact   Contact @relation(fields: [contactId], references: [id])
+  contactId String
 }
 
 enum AccountType {
@@ -80,39 +95,31 @@ enum AccountType {
   AGENCY
 }
 
-model UserProfile {
-  id  String  @id @default(cuid())
-  bio String? @db.VarChar(500)
-
-  address Address[]
-  contact Contact[]
-
-  user   User?   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  userId String? @unique
-}
-
 model Pet {
-  id String @id @default(uuid())
+  id      String  @id @default(uuid())
+  name    String  @db.VarChar(50)
+  species Species
 
-  name     String           @db.VarChar(50)
-  species  Species
-  location String?
-  breed    BreedsToPets[]
-  savedBy  SavedPetRecord[]
+  bio         String?
+  description String?
+  age         Age     @default(UNKNOWN)
+  sex         Sex     @default(UNKNOWN)
+  size        Size    @default(UNKNOWN)
+  coat        Coat    @default(UNKNOWN)
+  status      Status  @default(HOLD)
 
-  profile PetProfile?
+  colors      Colors?
+  attributes  Attributes?
+  environment Environment?
+  tags        TagsOnPets[]
+  breeds      BreedsToPets[]
+  savedBy     SavedPetRecord[]
 
-  agency   User?   @relation(fields: [agencyId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  agencyId String?
-}
+  org   User   @relation(fields: [orgId], references: [id])
+  orgId String
 
-model SavedPetRecord {
-  user   User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  userId String
-  pet    Pet    @relation(fields: [petId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  petId  String
-
-  @@id([userId, petId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Species {
@@ -125,81 +132,49 @@ enum Species {
   BARNYARD
 }
 
-model PetProfile {
-  id String @id @default(uuid())
-
-  age      Int?
-  bio      String? @db.VarChar(250)
-  weight   Int?
-  birthday String? @db.VarChar(128)
-
-  isFixed          Boolean?
-  isAdopted        Boolean  @default(false)
-  isAvailable      Boolean  @default(false)
-  isHouseTrained   Boolean?
-  isVaccineCurrent Boolean?
-
-  sex      Sex?      @default(UNKNOWN)
-  coat     Coat?     @default(UNKNOWN)
-  diet     Diet?     @default(STANDARD)
-  color    Color?    @default(UNKNOWN)
-  goodWith GoodWith? @default(UNKNOWN)
-
-  personality Personality? @default(UNKNOWN)
-
-  images ImagesToPetProfiles[]
-
-  pet   Pet?    @relation(fields: [petId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  petId String? @unique
-}
-
-enum Sex {
+enum Age {
+  YOUNG
+  ADULT
+  SENIOR
   UNKNOWN
-  FEMALE
-  MALE
 }
 
-enum Color {
+enum Size {
+  SM
+  MD
+  LG
+  XL
   UNKNOWN
-  BLACK
-  WHITE
-  BROWN
-  GOLDEN
-  SPOTTED
-  BRINDLE
-}
-
-enum Personality {
-  UNKNOWN
-  ACTIVE
-  CURIOUS
-  GOOFY
-  HYPER
-  LAZY
-  LONER
-}
-
-enum Diet {
-  STANDARD
-  MEDICAL
-  WEIGHT
 }
 
 enum Coat {
-  UNKNOWN
+  NONE
   SHORT
   MEDIUM
   LONG
-  NONE
+  UNKNOWN
 }
 
-enum GoodWith {
+enum Sex {
+  FEMALE
+  MALE
   UNKNOWN
-  CATS
-  DOGS
-  CHILDREN
-  CATS_AND_DOGS
-  ALL
+}
+
+enum Status {
+  ADOPTABLE
+  ADOPTED
+  HOLD
+}
+
+model Colors {
+  id        String  @id @default(cuid())
+  primary   String?
+  secondary String?
+  tertiary  String?
+
+  pet   Pet    @relation(fields: [petId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  petId String @unique
 }
 
 model Breed {
@@ -220,21 +195,86 @@ model BreedsToPets {
   @@id([breedId, petId])
 }
 
-model Image {
-  id String @id @default(uuid())
+model Attributes {
+  id                 String  @id @default(cuid())
+  isHouseTrained     Boolean @default(false)
+  hasSpecialNeeds    Boolean @default(false)
+  hasCurrentShots    Boolean @default(false)
+  isSpayedOrNeutered Boolean @default(false)
 
-  url       String?
-  file      String?
-  thumbnail String?
-
-  pets ImagesToPetProfiles[]
+  pet   Pet    @relation(fields: [petId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  petId String @unique
 }
 
-model ImagesToPetProfiles {
-  image        Image      @relation(fields: [imageId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  imageId      String
-  petProfile   PetProfile @relation(fields: [petProfileId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  petProfileId String
+model Tag {
+  id      String @id @default(cuid())
+  content String
 
-  @@id([imageId, petProfileId])
+  pets TagsOnPets[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
+
+enum Tags {
+  CUTE
+  INTELLIGENT
+  LARGE
+  PLAYFUL
+  HAPPY
+  AFFECTIONATE
+  SILLY
+  ENERGETIC
+  HIGH_OCTANE
+  LAZY
+  CALM
+  QUIET
+}
+
+model TagsOnPets {
+  pet   Pet    @relation(fields: [petId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  petId String
+  tag   Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  tagId String
+
+  // tell prisma that we don't want duplicate tag + petId records
+  @@id([petId, tagId])
+}
+
+model SavedPetRecord {
+  user   User   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  userId String
+  pet    Pet    @relation(fields: [petId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  petId  String
+
+  @@id([userId, petId])
+}
+
+model Environment {
+  id       String   @id @default(cuid())
+  children Boolean? @default(false)
+  dogs     Boolean? @default(false)
+  cats     Boolean? @default(false)
+
+  petId String @unique
+  pet   Pet    @relation(fields: [petId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+// model Image {
+//   id String @id @default(uuid())
+
+//   url       String?
+//   file      String?
+//   thumbnail String?
+
+//   pets ImagesToPetProfiles[]
+// }
+
+// model ImagesToPetProfiles {
+//   image        Image      @relation(fields: [imageId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+//   imageId      String
+//   petProfile   PetProfile @relation(fields: [petProfileId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+//   petProfileId String
+
+//   @@id([imageId, petProfileId])
+// }
