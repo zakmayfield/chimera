@@ -48,8 +48,9 @@ async function seed() {
     email: "email-1@email.com",
     password: "123",
     type: AccountType.AGENCY,
+    bio: 'Organization dedicated to pet rehoming'
   };
-  const { name, username, email, password, type } = userData;
+  const { name, username, email, password, type, bio } = userData;
 
   // cleanup the existing database
   await prisma.user.delete({ where: { email } }).catch(() => {
@@ -64,6 +65,7 @@ async function seed() {
       email,
       username,
       type,
+      bio,
       password: {
         create: {
           hash: hashedPassword,
@@ -153,6 +155,30 @@ async function seed() {
             },
           },
         ],
+      },
+      contact: {
+        create: {
+          email: userData.email,
+          phone: {
+            create: [
+              {
+                number: "513-123-4567",
+              },
+              {
+                number: "877-785-9885",
+              },
+            ],
+          },
+        },
+      },
+      address: {
+        create: {
+          address: "123 main st",
+          city: "Golden Gale",
+          country: "Sillion",
+          state: "Provis",
+          zip: "21224",
+        },
       },
     },
   });

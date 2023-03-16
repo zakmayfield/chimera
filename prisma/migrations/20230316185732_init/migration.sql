@@ -28,6 +28,7 @@ CREATE TABLE "User" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "username" TEXT,
+    "bio" TEXT,
     "type" "AccountType" NOT NULL DEFAULT 'DEFAULT',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -60,9 +61,9 @@ CREATE TABLE "Address" (
     "apartment" VARCHAR(25),
     "city" VARCHAR(50) NOT NULL,
     "state" VARCHAR(50) NOT NULL,
-    "zip" INTEGER NOT NULL,
+    "zip" TEXT NOT NULL,
     "country" VARCHAR(100) NOT NULL,
-    "userProfileId" TEXT,
+    "userId" TEXT,
 
     CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
 );
@@ -70,20 +71,19 @@ CREATE TABLE "Address" (
 -- CreateTable
 CREATE TABLE "Contact" (
     "id" TEXT NOT NULL,
-    "phone" VARCHAR(50),
     "email" VARCHAR(75),
-    "userProfileId" TEXT,
+    "userId" TEXT,
 
     CONSTRAINT "Contact_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "UserProfile" (
+CREATE TABLE "Phone" (
     "id" TEXT NOT NULL,
-    "bio" VARCHAR(500),
-    "userId" TEXT,
+    "number" TEXT NOT NULL,
+    "contactId" TEXT NOT NULL,
 
-    CONSTRAINT "UserProfile_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Phone_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -192,13 +192,10 @@ CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 CREATE UNIQUE INDEX "Password_userId_key" ON "Password"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Address_userProfileId_key" ON "Address"("userProfileId");
+CREATE UNIQUE INDEX "Address_userId_key" ON "Address"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Contact_userProfileId_key" ON "Contact"("userProfileId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "UserProfile_userId_key" ON "UserProfile"("userId");
+CREATE UNIQUE INDEX "Contact_userId_key" ON "Contact"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Colors_petId_key" ON "Colors"("petId");
@@ -216,13 +213,13 @@ ALTER TABLE "Password" ADD CONSTRAINT "Password_userId_fkey" FOREIGN KEY ("userI
 ALTER TABLE "Note" ADD CONSTRAINT "Note_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Address" ADD CONSTRAINT "Address_userProfileId_fkey" FOREIGN KEY ("userProfileId") REFERENCES "UserProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Address" ADD CONSTRAINT "Address_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Contact" ADD CONSTRAINT "Contact_userProfileId_fkey" FOREIGN KEY ("userProfileId") REFERENCES "UserProfile"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Contact" ADD CONSTRAINT "Contact_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "UserProfile" ADD CONSTRAINT "UserProfile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Phone" ADD CONSTRAINT "Phone_contactId_fkey" FOREIGN KEY ("contactId") REFERENCES "Contact"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Pet" ADD CONSTRAINT "Pet_orgId_fkey" FOREIGN KEY ("orgId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
