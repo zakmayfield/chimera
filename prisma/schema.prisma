@@ -51,11 +51,6 @@ model Note {
   userId String
 }
 
-// // address with two options for address slots
-// model Address {
-//    primary AddressType
-//    secondary AddressType
-// }
 model Address {
   id String @id @default(uuid())
 
