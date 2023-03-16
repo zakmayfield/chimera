@@ -1,6 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { AccountType, PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { catBreeds, dogBreeds, horseBreeds } from "./seedData";
+
 
 const prisma = new PrismaClient();
 
@@ -47,9 +48,9 @@ async function seed() {
     username: "searingheart",
     email: "email-1@email.com",
     password: "123",
-    type: "AGENCY",
+    type: AccountType.AGENCY,
   };
-  const { name, username, email, password } = userData;
+  const { name, username, email, password, type } = userData;
 
   // cleanup the existing database
   await prisma.user.delete({ where: { email } }).catch(() => {
@@ -58,11 +59,14 @@ async function seed() {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
+  
+
   await prisma.user.create({
     data: {
       name,
       email,
       username,
+      type,
       password: {
         create: {
           hash: hashedPassword,
