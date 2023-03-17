@@ -1,10 +1,13 @@
 import { Link } from "@remix-run/react";
 import dogs from "~/images/dogs.jpg";
+import paw from "~/images/paw.png";
+import dog from "~/images/dog.png";
+import cat from "~/images/cat.png";
 
-import { useOptionalUser } from "~/utils/utils";
+// import { useOptionalUser } from "~/utils/utils";
 
 export default function Index() {
-  const user = useOptionalUser();
+  // const user = useOptionalUser();
   return (
     <main className="relative min-h-screen bg-white sm:flex sm:justify-center">
       <div className="relative sm:pb-16">
@@ -32,7 +35,40 @@ export default function Index() {
                 Find your forever friend.
               </p>
               <div className="mx-auto mt-20 max-w-sm sm:flex sm:max-w-none sm:justify-center">
-                {user ? (
+                {/* List of options to filter pets by / this should be its own component, same with the navbar within root.. */}
+                <div className="mx-auto w-2/5 space-y-4 text-center sm:inline-grid sm:w-4/6 sm:grid-cols-3 sm:gap-5 sm:space-y-0">
+                  <div className="flex flex-col rounded bg-white px-6 py-5 text-base font-medium">
+                    <Link to=".">
+                      <img
+                        className="m-auto w-11/12"
+                        src={dog}
+                        alt="dog face outline"
+                      />
+                      Dogs
+                    </Link>
+                  </div>
+                  <div className="rounded bg-white px-6 py-5 text-base font-medium">
+                    <Link to=".">
+                      <img
+                        className="m-auto w-11/12"
+                        src={cat}
+                        alt="cat face outline"
+                      />
+                      Cats
+                    </Link>
+                  </div>
+                  <div className="rounded bg-white px-6 py-5 text-base font-medium">
+                    <Link to=".">
+                      <img
+                        className="m-auto w-11/12"
+                        src={paw}
+                        alt="animal paw outline"
+                      />
+                      Other
+                    </Link>
+                  </div>
+                </div>
+                {/* {user ? (
                   <Link
                     to="/notes"
                     className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-blue-700 shadow-sm hover:bg-blue-50 sm:px-8"
@@ -54,15 +90,8 @@ export default function Index() {
                       Log In
                     </Link>
                   </div>
-                )}
+                )} */}
               </div>
-              {/* <a href="https://remix.run">
-                <img
-                  src="https://user-images.githubusercontent.com/1500684/158298926-e45dafff-3544-4b69-96d6-d3bcc33fc76a.svg"
-                  alt="Remix"
-                  className="mx-auto mt-16 w-full max-w-[12rem] md:max-w-[16rem]"
-                />
-              </a> */}
             </div>
           </div>
         </div>
