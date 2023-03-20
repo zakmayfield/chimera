@@ -1,22 +1,31 @@
 import type { LinksFunction, LoaderArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import {
+  Form,
   Links,
   LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
+  // useOutlet,
+  // useLocation,
+  // useLoaderData,
 } from "@remix-run/react";
-import acme from "~/images/acme.png";
 
-import { AiOutlineHeart, AiOutlineMenu } from "react-icons/ai";
+// import acme from "~/images/acme.png";
+import {
+  AiOutlineHome,
+  AiOutlineHeart,
+  AiOutlineMail,
+  AiOutlineLogout,
+} from "react-icons/ai";
+import { Link } from "@remix-run/react";
 
 import { getUser } from "./utils/session.server";
 import tailwindStylesheetUrl from "./styles/tailwind.css";
-
-import { Link } from "@remix-run/react";
+import { useState } from "react";
+// import { AnimatePresence, motion } from "framer-motion";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
@@ -34,8 +43,25 @@ export async function loader({ request }: LoaderArgs) {
   });
 }
 
+function Tooltip({ text, children }: { text: string; children: any }) {
+  const [isActive, setIsActive] = useState(false);
+  return (
+    <div className="relative text-center">
+      <div className={`${isActive ? "visible" : "invisible"} text-sm`}>{text}</div>
+
+      <div
+        onMouseEnter={() => setIsActive(true)}
+        onMouseLeave={() => setIsActive(false)}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
-  const data = useLoaderData<typeof loader>();
+  // const data = useLoaderData<typeof loader>();
+  // const outlet = useOutlet();
 
   return (
     <html lang="en" className="h-full">
@@ -43,47 +69,50 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="h-full">
-        {/* Universal Navbar */}
-        <div className="flex gap-2.5 py-3 px-4 sm:py-0">
-          {/* logo container */}
-          <div className=" w-xs">
-            <Link to="/">
-              <img src={acme} alt="acme logo" />
-            </Link>
-          </div>
+      <body className="min-h-screen">
+        <Outlet />
+        {/* <AnimatePresence mode='wait' initial={false}>
+          <motion.main
+            key={useLocation().pathname}
+            initial={{ x: "-10%", opacity: 0 }}
+            animate={{ x: "0", opacity: 1 }}
+            exit={{ y: "-10%", opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {outlet}
+          </motion.main>
+        </AnimatePresence> */}
 
-          <div className="flex w-full justify-end gap-2.5">
-            {/* cta container */}
-            <div className="flex items-center text-3xl ">
-              <Link to="/saved" className="mr-5">
+        <div className="absolute bottom-4 w-full text-center">
+          <div className="relative inline-grid grid-cols-4 gap-5 rounded-md bg-black bg-opacity-80 px-4 py-3 text-2xl text-white md:text-4xl">
+            <Tooltip text="Home">
+              <Link to="/">
+                <AiOutlineHome />
+              </Link>
+            </Tooltip>
+
+            <Tooltip text="Login">
+              <Link to="/login">
                 <AiOutlineHeart />
               </Link>
+            </Tooltip>
 
-              <div className="sm:border-r-2 pr-2.5" >
-                <AiOutlineMenu />
-              </div>
-            </div>
+            <Tooltip text="Join">
+              <Link to="/join">
+                <AiOutlineMail />
+              </Link>
+            </Tooltip>
 
-            {/* auth container */}
-            {data.user && (
-              <div className="hidden sm:flex sm:items-center lg:ml-10">
-                <p>
-                  <Link
-                    to={`dashboard/${data.user.id}`}
-                    className="p-1 text-lg text-gray-700"
-                  >
-                    @{data.user.username ? data.user.username : data.user.name}{" "}
-                    (v)
-                  </Link>
-                </p>
-              </div>
-            )}
+            <Tooltip text="Logout">
+              <Form action="/logout" method="post" className="m-0 p-0">
+                <button type="submit" className="bg-transparent">
+                  <AiOutlineLogout />
+                </button>
+              </Form>
+            </Tooltip>
           </div>
         </div>
-        {/* Universal Navbar End */}
 
-        <Outlet />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
