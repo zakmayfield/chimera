@@ -7,6 +7,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  // useOutlet,
+  // useLocation,
   // useLoaderData,
 } from "@remix-run/react";
 
@@ -16,6 +18,7 @@ import { Link } from "@remix-run/react";
 
 import { getUser } from "./utils/session.server";
 import tailwindStylesheetUrl from "./styles/tailwind.css";
+// import { AnimatePresence, motion } from "framer-motion";
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
@@ -35,6 +38,7 @@ export async function loader({ request }: LoaderArgs) {
 
 export default function App() {
   // const data = useLoaderData<typeof loader>();
+  // const outlet = useOutlet();
 
   return (
     <html lang="en" className="h-full">
@@ -45,15 +49,27 @@ export default function App() {
       <body className="min-h-screen">
         <Outlet />
 
+        {/* <AnimatePresence mode='wait' initial={false}>
+          <motion.main
+            key={useLocation().pathname}
+            initial={{ x: "-10%", opacity: 0 }}
+            animate={{ x: "0", opacity: 1 }}
+            exit={{ y: "-10%", opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {outlet}
+          </motion.main>
+        </AnimatePresence> */}
+
         <div className="absolute bottom-4 w-full text-center">
-          <div className="inline-grid grid-cols-3 gap-5 rounded-md bg-black bg-opacity-80 px-4 py-3 text-white text-2xl md:text-4xl">
-            <Link to="/">
+          <div className="inline-grid grid-cols-3 gap-5 rounded-md bg-black bg-opacity-80 px-4 py-3 text-2xl text-white md:text-4xl">
+            <Link to="/" onClick={() => console.log('clicked')}>
               <AiOutlineHome />
             </Link>
-            <Link to="/saved">
+            <Link to="/login">
               <AiOutlineHeart />
             </Link>
-            <Link to="/contact">
+            <Link to="/join">
               <AiOutlineMail />
             </Link>
           </div>
