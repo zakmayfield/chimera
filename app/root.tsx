@@ -12,7 +12,7 @@ import {
 
 // import acme from "~/images/acme.png";
 // import { AiOutlineHeart, AiOutlineMenu } from "react-icons/ai";
-// import { Link } from "@remix-run/react";
+import { Link } from "@remix-run/react";
 
 import { getUser } from "./utils/session.server";
 import tailwindStylesheetUrl from "./styles/tailwind.css";
@@ -45,6 +45,14 @@ export default function App() {
       </head>
       <body className="min-h-screen">
         <Outlet />
+
+        <div className="absolute bottom-4 w-full border-2 border-black text-center">
+          <div className="inline-grid grid-cols-2 gap-2 rounded-md border-2 border-black px-2 py-3">
+            <Link to="/">Home</Link>
+            <Link to="/">About</Link>
+          </div>
+        </div>
+
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

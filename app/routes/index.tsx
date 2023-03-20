@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+
 // import dogs from "~/images/dogs.jpg";
 // import paw from "~/images/paw.png";
 // import dog from "~/images/dog.png";
@@ -27,12 +27,6 @@ export default function Index() {
             </div>
           </div>
           {/* Landing page top content END */}
-          <div className='w-full absolute border-2 border-black text-center'>
-            <div className='border-2 border-black inline-grid grid-cols-2 gap-2 px-2 py-1 rounded-md'>
-              <Link to='/'>Home</Link>
-              <Link to='/'>About</Link>
-            </div>
-          </div>
         </div>
       </div>
     </main>
