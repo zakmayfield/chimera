@@ -19,9 +19,9 @@ export default function Index() {
                 <h1 className="block text-center text-6xl font-extrabold uppercase tracking-tight text-white drop-shadow-md md:text-8xl lg:text-9xl">
                   Chimera
                 </h1>
-                <p className="block text-center text-xl uppercase tracking-wide drop-shadow text-white md:text-2xl">
+                <h2 className="block text-center text-xl uppercase tracking-wide drop-shadow text-white md:text-2xl lg:text-3xl">
                   Find your forever friend
-                </p>
+                </h2>
               </div>
             </div>
           </div>
