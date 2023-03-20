@@ -1,4 +1,3 @@
-
 // import dogs from "~/images/dogs.jpg";
 // import paw from "~/images/paw.png";
 // import dog from "~/images/dog.png";
@@ -13,14 +12,14 @@ export default function Index() {
       <div className="relative">
         <div className="w-full">
           {/* Landing page top content */}
-          <div className="relative border-2 border-black sm:p-8 sm:pb-0">
+          <div className="relative sm:p-8 sm:pb-0">
             <div className="relative mx-auto max-w-screen-xl bg-[url('~/images/dogs.jpg')] bg-cover bg-center py-40 sm:rounded-lg">
-              <div className="absolute inset-0 bg-[color:rgba(27,167,254,0.5)] mix-blend-multiply sm:rounded-lg" />
+              <div className="absolute inset-0 bg-[color:rgba(0,0,0,0.3)] mix-blend-multiply sm:rounded-lg" />
               <div>
-                <h1 className="block text-center text-6xl font-extrabold uppercase tracking-tight text-white drop-shadow-md md:text-8xl">
+                <h1 className="block text-center text-6xl font-extrabold uppercase tracking-tight text-white drop-shadow-md md:text-8xl lg:text-9xl">
                   Chimera
                 </h1>
-                <p className="block text-center text-xl uppercase tracking-tight text-white md:text-2xl">
+                <p className="block text-center text-xl uppercase tracking-wide drop-shadow text-white md:text-2xl">
                   Find your forever friend
                 </p>
               </div>

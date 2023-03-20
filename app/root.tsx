@@ -11,12 +11,11 @@ import {
 } from "@remix-run/react";
 
 // import acme from "~/images/acme.png";
-// import { AiOutlineHeart, AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineHome, AiOutlineHeart, AiOutlineMail } from "react-icons/ai";
 import { Link } from "@remix-run/react";
 
 import { getUser } from "./utils/session.server";
 import tailwindStylesheetUrl from "./styles/tailwind.css";
-
 
 export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
@@ -46,10 +45,17 @@ export default function App() {
       <body className="min-h-screen">
         <Outlet />
 
-        <div className="absolute bottom-4 w-full border-2 border-black text-center">
-          <div className="inline-grid grid-cols-2 gap-2 rounded-md border-2 border-black px-2 py-3">
-            <Link to="/">Home</Link>
-            <Link to="/">About</Link>
+        <div className="absolute bottom-4 w-full text-center">
+          <div className="inline-grid grid-cols-3 gap-5 rounded-md bg-black bg-opacity-80 px-4 py-3 text-white text-2xl md:text-4xl">
+            <Link to="/">
+              <AiOutlineHome />
+            </Link>
+            <Link to="/saved">
+              <AiOutlineHeart />
+            </Link>
+            <Link to="/contact">
+              <AiOutlineMail />
+            </Link>
           </div>
         </div>
 
