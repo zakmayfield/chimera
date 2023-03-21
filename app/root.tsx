@@ -48,7 +48,7 @@ function Tooltip({ text, children }: { text: string; children: any }) {
   return (
     <div className="relative text-center">
       <div
-        className={`absolute bottom-16 -left-5 w-20 rounded-md bg-black bg-opacity-80 py-1 text-sm text-white ${
+        className={`absolute bottom-14 md:bottom-16 -left-5 px-5 py-1 rounded-md bg-black bg-opacity-80 py-1 text-sm text-white ${
           isActive ? "visible" : "invisible"
         }`}
       >
