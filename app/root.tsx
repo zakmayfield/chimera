@@ -47,7 +47,13 @@ function Tooltip({ text, children }: { text: string; children: any }) {
   const [isActive, setIsActive] = useState(false);
   return (
     <div className="relative text-center">
-      <div className={`${isActive ? "visible" : "invisible"} text-sm`}>{text}</div>
+      <div
+        className={`absolute bottom-16 -left-5 w-20 rounded-md bg-black bg-opacity-80 py-1 text-sm text-white ${
+          isActive ? "visible" : "invisible"
+        }`}
+      >
+        <span className="tracking-wide">{text}</span>
+      </div>
 
       <div
         onMouseEnter={() => setIsActive(true)}
