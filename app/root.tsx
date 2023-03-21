@@ -8,23 +8,24 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  // useOutlet,
-  // useLocation,
   // useLoaderData,
 } from "@remix-run/react";
 
 // import acme from "~/images/acme.png";
 import {
-  AiOutlineHome,
-  AiOutlineHeart,
-  AiOutlineMail,
-  AiOutlineLogout,
-} from "react-icons/ai";
+  RiHomeLine,
+  // RiHeart3Line,
+  RiMailSendLine,
+  RiLoginCircleLine,
+  RiUser3Line,
+  RiLogoutCircleRLine,
+} from "react-icons/ri";
 import { Link } from "@remix-run/react";
 
 import { getUser } from "./utils/session.server";
 import tailwindStylesheetUrl from "./styles/tailwind.css";
 import { useState } from "react";
+import { useOptionalUser } from "./utils/utils";
 // import { AnimatePresence, motion } from "framer-motion";
 
 export const links: LinksFunction = () => {
@@ -48,7 +49,7 @@ function Tooltip({ text, children }: { text: string; children: any }) {
   return (
     <div className="relative text-center">
       <div
-        className={`absolute bottom-14 md:bottom-16 -left-5 px-5 py-1 rounded-md bg-black bg-opacity-80 py-1 text-sm text-white ${
+        className={`absolute bottom-10 -left-8 rounded-md bg-black bg-opacity-80 px-5 py-1 py-1 text-sm text-white md:bottom-12 ${
           isActive ? "visible" : "invisible"
         }`}
       >
@@ -58,8 +59,9 @@ function Tooltip({ text, children }: { text: string; children: any }) {
       <div
         onMouseEnter={() => setIsActive(true)}
         onMouseLeave={() => setIsActive(false)}
+        className="relative flex h-full items-center"
       >
-        {children}
+        <div>{children}</div>
       </div>
     </div>
   );
@@ -68,6 +70,7 @@ function Tooltip({ text, children }: { text: string; children: any }) {
 export default function App() {
   // const data = useLoaderData<typeof loader>();
   // const outlet = useOutlet();
+  const user = useOptionalUser();
 
   return (
     <html lang="en" className="h-full">
@@ -90,32 +93,50 @@ export default function App() {
         </AnimatePresence> */}
 
         <div className="absolute bottom-4 w-full text-center">
-          <div className="relative inline-grid grid-cols-4 gap-5 rounded-md bg-black bg-opacity-80 px-4 py-3 text-2xl text-white md:text-4xl">
+          <div
+            className={`relative inline-grid ${
+              user ? "grid-cols-4" : "grid-cols-3"
+            } gap-5 rounded-md bg-black bg-opacity-80 px-8 py-2 text-2xl text-white md:px-10 md:py-3 md:text-3xl`}
+          >
             <Tooltip text="Home">
               <Link to="/">
-                <AiOutlineHome />
+                <RiHomeLine />
               </Link>
             </Tooltip>
 
-            <Tooltip text="Login">
-              <Link to="/login">
-                <AiOutlineHeart />
+            <Tooltip text="Contact">
+              <Link to="/contact">
+                <RiMailSendLine />
               </Link>
             </Tooltip>
 
-            <Tooltip text="Join">
-              <Link to="/join">
-                <AiOutlineMail />
-              </Link>
-            </Tooltip>
+            {user ? (
+              <Tooltip text="Dashboard">
+                <Link to="/dashboard">
+                  <RiUser3Line />
+                </Link>
+              </Tooltip>
+            ) : (
+              <Tooltip text="Login">
+                <Link to="/login">
+                  <RiLoginCircleLine />
+                </Link>
+              </Tooltip>
+            )}
 
-            <Tooltip text="Logout">
-              <Form action="/logout" method="post" className="m-0 p-0">
-                <button type="submit" className="bg-transparent">
-                  <AiOutlineLogout />
-                </button>
-              </Form>
-            </Tooltip>
+            {user && (
+              <Tooltip text="Logout">
+                <Form
+                  action="/logout"
+                  method="post"
+                  className="m-0 flex items-center p-0"
+                >
+                  <button type="submit" className="m-0 bg-transparent p-0">
+                    <RiLogoutCircleRLine />
+                  </button>
+                </Form>
+              </Tooltip>
+            )}
           </div>
         </div>
 
