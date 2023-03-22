@@ -104,7 +104,7 @@ export default function App() {
             </Tooltip>
 
             <Tooltip text="Saved">
-              <Link to="/saved">
+              <Link to="/dashboard/saved">
                 <RiHeart3Line />
               </Link>
             </Tooltip>
