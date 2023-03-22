@@ -2,7 +2,7 @@ import type { LoaderArgs } from "@remix-run/server-runtime";
 import { getUser } from "~/models/user.server";
 import { requireUserId } from "~/utils/session.server";
 import { json } from "@remix-run/node";
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await requireUserId(request);
@@ -14,7 +14,6 @@ export default function SavedPetsPage() {
   const data = useLoaderData<typeof loader>();
   const { user } = data;
   const pets = user?.savedPets;
-  console.log("data", data.user?.savedPets[0].pet);
 
   return (
     <div>
