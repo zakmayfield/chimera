@@ -14,8 +14,7 @@ import {
 // import acme from "~/images/acme.png";
 import {
   RiHomeLine,
-  // RiHeart3Line,
-  RiMailSendLine,
+  RiHeart3Line,
   RiLoginCircleLine,
   RiUser3Line,
   RiLogoutCircleRLine,
@@ -68,8 +67,6 @@ function Tooltip({ text, children }: { text: string; children: any }) {
 }
 
 export default function App() {
-  // const data = useLoaderData<typeof loader>();
-  // const outlet = useOutlet();
   const user = useOptionalUser();
 
   return (
@@ -104,19 +101,13 @@ export default function App() {
               </Link>
             </Tooltip>
 
-            <Tooltip text="Contact">
-              <Link to="/contact">
-                <RiMailSendLine />
+            <Tooltip text="Saved">
+              <Link to="/dashboard/saved">
+                <RiHeart3Line />
               </Link>
             </Tooltip>
 
-            {user ? (
-              <Tooltip text="Dashboard">
-                <Link to="/dashboard">
-                  <RiUser3Line />
-                </Link>
-              </Tooltip>
-            ) : (
+            {!user && (
               <Tooltip text="Login">
                 <Link to="/login">
                   <RiLoginCircleLine />
@@ -124,6 +115,15 @@ export default function App() {
               </Tooltip>
             )}
 
+            {user && (
+              <Tooltip text="Dashboard">
+                <Link to="/dashboard">
+                  <RiUser3Line />
+                </Link>
+              </Tooltip>
+            )}
+
+            {/* for development i will add a logout button in the nav for ease of use, i dont think i want the log out button on the nav */}
             {user && (
               <Tooltip text="Logout">
                 <Form
@@ -139,6 +139,51 @@ export default function App() {
             )}
           </div>
         </div>
+        {/* <div className="absolute bottom-4 w-full text-center">
+          <div
+            className={`relative inline-grid ${
+              user ? "grid-cols-4" : "grid-cols-3"
+            } gap-5 rounded-md bg-black bg-opacity-80 px-8 py-2 text-2xl text-white md:px-10 md:py-3 md:text-3xl`}
+          >
+            <Tooltip text="Home">
+              <Link to="/">
+                <RiHomeLine />
+              </Link>
+            </Tooltip>
+
+            <Tooltip text="Saved">
+              <Link to="/dashboard/saved">
+                <RiHeart3Line />
+              </Link>
+            </Tooltip>
+            {user && (
+              <Tooltip text="Logout">
+                <Form
+                  action="/logout"
+                  method="post"
+                  className="m-0 flex items-center p-0"
+                >
+                  <button type="submit" className="m-0 bg-transparent p-0">
+                    <RiLogoutCircleRLine />
+                  </button>
+                </Form>
+              </Tooltip>
+            )}
+            {user ? (
+              <Tooltip text="Dashboard">
+                <Link to="/dashboard">
+                  <RiUser3Line />
+                </Link>
+              </Tooltip>
+            ) : (
+              <Tooltip text="Login">
+                <Link to="/login">
+                  <RiLoginCircleLine />
+                </Link>
+              </Tooltip>
+            )}
+          </div>
+        </div> */}
 
         <ScrollRestoration />
         <Scripts />
