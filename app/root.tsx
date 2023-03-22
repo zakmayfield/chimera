@@ -19,6 +19,7 @@ import {
   RiUser3Line,
   RiLogoutCircleRLine,
 } from "react-icons/ri";
+import { RxDividerVertical } from "react-icons/rx";
 import { Link } from "@remix-run/react";
 
 import { getUser } from "./utils/session.server";
@@ -67,8 +68,6 @@ function Tooltip({ text, children }: { text: string; children: any }) {
 }
 
 export default function App() {
-  // const data = useLoaderData<typeof loader>();
-  // const outlet = useOutlet();
   const user = useOptionalUser();
 
   return (
@@ -108,21 +107,6 @@ export default function App() {
                 <RiHeart3Line />
               </Link>
             </Tooltip>
-
-            {user ? (
-              <Tooltip text="Dashboard">
-                <Link to="/dashboard">
-                  <RiUser3Line />
-                </Link>
-              </Tooltip>
-            ) : (
-              <Tooltip text="Login">
-                <Link to="/login">
-                  <RiLoginCircleLine />
-                </Link>
-              </Tooltip>
-            )}
-
             {user && (
               <Tooltip text="Logout">
                 <Form
@@ -134,6 +118,19 @@ export default function App() {
                     <RiLogoutCircleRLine />
                   </button>
                 </Form>
+              </Tooltip>
+            )}
+            {user ? (
+              <Tooltip text="Dashboard">
+                <Link to="/dashboard">
+                  <RiUser3Line />
+                </Link>
+              </Tooltip>
+            ) : (
+              <Tooltip text="Login">
+                <Link to="/login">
+                  <RiLoginCircleLine />
+                </Link>
               </Tooltip>
             )}
           </div>
