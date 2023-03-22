@@ -14,8 +14,7 @@ import {
 // import acme from "~/images/acme.png";
 import {
   RiHomeLine,
-  // RiHeart3Line,
-  RiMailSendLine,
+  RiHeart3Line,
   RiLoginCircleLine,
   RiUser3Line,
   RiLogoutCircleRLine,
@@ -104,9 +103,9 @@ export default function App() {
               </Link>
             </Tooltip>
 
-            <Tooltip text="Contact">
-              <Link to="/contact">
-                <RiMailSendLine />
+            <Tooltip text="Saved">
+              <Link to="/saved">
+                <RiHeart3Line />
               </Link>
             </Tooltip>
 
