@@ -7,7 +7,6 @@ import { createUserSession, getUserId } from "~/utils/session.server";
 
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils/utils";
-import { AccountType } from '@prisma/client';
 
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);
@@ -21,7 +20,6 @@ export async function action({ request }: ActionArgs) {
   const username = formData.get("username");
   const email = formData.get("email");
   const password = formData.get("password");
-  const type = formData.get("type");
 
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
 
@@ -100,21 +98,6 @@ export async function action({ request }: ActionArgs) {
     );
   }
 
-  if (!Object.values(AccountType).includes(type as AccountType)) {
-    return json(
-      {
-        errors: {
-          name: null,
-          username: null,
-          email: null,
-          password: null,
-          type: "Invalid account type",
-        },
-      },
-      { status: 400 }
-    );
-  }
-
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
     return json(
@@ -131,7 +114,7 @@ export async function action({ request }: ActionArgs) {
     );
   }
 
-  const user = await createUser(email, password);
+  const user = await createUser(name, username, email, password);
 
   return createUserSession({
     request,
@@ -155,7 +138,6 @@ export default function Join() {
   const usernameRef = React.useRef<HTMLInputElement>(null);
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
-  const typeRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     if (actionData?.errors?.email) {
@@ -166,9 +148,7 @@ export default function Join() {
       nameRef.current?.focus();
     } else if (actionData?.errors?.username) {
       usernameRef.current?.focus();
-    } else if (actionData?.errors?.type) {
-      typeRef.current?.focus();
-    }
+    } 
   }, [actionData]);
 
   return (
@@ -252,33 +232,6 @@ export default function Join() {
               {actionData?.errors?.email && (
                 <div className="pt-1 text-red-700" id="email-error">
                   {actionData.errors.email}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div>
-            <label
-              htmlFor="type"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Type
-            </label>
-            <div className="mt-1">
-              <input
-                ref={typeRef}
-                id="type"
-                required
-                name="type"
-                type="type"
-                autoComplete="type"
-                aria-invalid={actionData?.errors?.type ? true : undefined}
-                aria-describedby="type-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              />
-              {actionData?.errors?.type && (
-                <div className="pt-1 text-red-700" id="type-error">
-                  {actionData.errors.type}
                 </div>
               )}
             </div>
