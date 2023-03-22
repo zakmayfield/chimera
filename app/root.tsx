@@ -19,7 +19,6 @@ import {
   RiUser3Line,
   RiLogoutCircleRLine,
 } from "react-icons/ri";
-import { RxDividerVertical } from "react-icons/rx";
 import { Link } from "@remix-run/react";
 
 import { getUser } from "./utils/session.server";
@@ -107,6 +106,56 @@ export default function App() {
                 <RiHeart3Line />
               </Link>
             </Tooltip>
+
+            {!user && (
+              <Tooltip text="Login">
+                <Link to="/login">
+                  <RiLoginCircleLine />
+                </Link>
+              </Tooltip>
+            )}
+
+            {user && (
+              <Tooltip text="Dashboard">
+                <Link to="/dashboard">
+                  <RiUser3Line />
+                </Link>
+              </Tooltip>
+            )}
+
+            {/* for development i will add a logout button in the nav for ease of use, i dont think i want the log out button on the nav */}
+            {user && (
+              <Tooltip text="Logout">
+                <Form
+                  action="/logout"
+                  method="post"
+                  className="m-0 flex items-center p-0"
+                >
+                  <button type="submit" className="m-0 bg-transparent p-0">
+                    <RiLogoutCircleRLine />
+                  </button>
+                </Form>
+              </Tooltip>
+            )}
+          </div>
+        </div>
+        {/* <div className="absolute bottom-4 w-full text-center">
+          <div
+            className={`relative inline-grid ${
+              user ? "grid-cols-4" : "grid-cols-3"
+            } gap-5 rounded-md bg-black bg-opacity-80 px-8 py-2 text-2xl text-white md:px-10 md:py-3 md:text-3xl`}
+          >
+            <Tooltip text="Home">
+              <Link to="/">
+                <RiHomeLine />
+              </Link>
+            </Tooltip>
+
+            <Tooltip text="Saved">
+              <Link to="/dashboard/saved">
+                <RiHeart3Line />
+              </Link>
+            </Tooltip>
             {user && (
               <Tooltip text="Logout">
                 <Form
@@ -134,7 +183,7 @@ export default function App() {
               </Tooltip>
             )}
           </div>
-        </div>
+        </div> */}
 
         <ScrollRestoration />
         <Scripts />
