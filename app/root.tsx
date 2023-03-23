@@ -8,6 +8,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  NavLink,
+  // useLoaderData,
   // useLoaderData,
 } from "@remix-run/react";
 
@@ -19,7 +21,7 @@ import {
   RiUser3Line,
   RiLogoutCircleRLine,
 } from "react-icons/ri";
-import { Link } from "@remix-run/react";
+import { MdPets } from "react-icons/md";
 
 import { getUser } from "./utils/session.server";
 import tailwindStylesheetUrl from "./styles/tailwind.css";
@@ -37,28 +39,34 @@ export const meta: MetaFunction = () => ({
   viewport: "width=device-width,initial-scale=1",
 });
 
-export async function loader({ request }: LoaderArgs) {
+export async function loader({ request, params }: LoaderArgs) {
+  console.log("request url", request.url);
+
   return json({
     user: await getUser(request),
   });
 }
 
 function Tooltip({ text, children }: { text: string; children: any }) {
-  const [isActive, setIsActive] = useState(false);
+  const [showToolTip, setShowTooltip] = useState(false);
   return (
     <div className="relative text-center">
       <div
         className={`absolute bottom-10 -left-8 rounded-md bg-black bg-opacity-80 px-5 py-1 py-1 text-sm text-white md:bottom-12 ${
-          isActive ? "visible" : "invisible"
+          showToolTip ? "visible" : "invisible"
         }`}
       >
         <span className="tracking-wide">{text}</span>
       </div>
 
       <div
-        onMouseEnter={() => setIsActive(true)}
-        onMouseLeave={() => setIsActive(false)}
-        className="relative flex h-full items-center"
+        onMouseEnter={() => {
+          setShowTooltip(true);
+        }}
+        onMouseLeave={() => {
+          setShowTooltip(false);
+        }}
+        className={`relative flex h-full items-center`}
       >
         <div>{children}</div>
       </div>
@@ -67,6 +75,7 @@ function Tooltip({ text, children }: { text: string; children: any }) {
 }
 
 export default function App() {
+  // const data = useLoaderData<typeof loader>();
   const user = useOptionalUser();
 
   return (
@@ -92,34 +101,65 @@ export default function App() {
         <div className="absolute bottom-4 w-full text-center">
           <div
             className={`relative inline-grid ${
-              user ? "grid-cols-4" : "grid-cols-3"
+              user ? "grid-cols-5" : "grid-cols-4"
             } gap-5 rounded-md bg-black bg-opacity-80 px-8 py-2 text-2xl text-white md:px-10 md:py-3 md:text-3xl`}
           >
             <Tooltip text="Home">
-              <Link to="/">
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive ? "text-3xl text-white" : "text-gray-300"
+                }
+              >
                 <RiHomeLine />
-              </Link>
+              </NavLink>
+            </Tooltip>
+
+            <Tooltip text="Pets">
+              <NavLink
+                to="/pets"
+                className={({ isActive }) =>
+                  isActive ? "text-3xl text-white" : "text-gray-300"
+                }
+              >
+                <MdPets />
+              </NavLink>
             </Tooltip>
 
             <Tooltip text="Saved">
-              <Link to="/dashboard/saved">
+              <NavLink
+                to="/dashboard/saved"
+                className={({ isActive }) =>
+                  isActive ? "text-3xl text-white" : "text-gray-300"
+                }
+              >
                 <RiHeart3Line />
-              </Link>
+              </NavLink>
             </Tooltip>
 
             {!user && (
               <Tooltip text="Login">
-                <Link to="/login">
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    isActive ? "text-3xl text-white" : "text-gray-300"
+                  }
+                >
                   <RiLoginCircleLine />
-                </Link>
+                </NavLink>
               </Tooltip>
             )}
 
             {user && (
               <Tooltip text="Dashboard">
-                <Link to="/dashboard">
+                <NavLink
+                  to="/dashboard"
+                  className={({ isActive }) =>
+                    isActive ? "text-3xl text-white" : "text-gray-300"
+                  }
+                >
                   <RiUser3Line />
-                </Link>
+                </NavLink>
               </Tooltip>
             )}
 
@@ -129,9 +169,12 @@ export default function App() {
                 <Form
                   action="/logout"
                   method="post"
-                  className="m-0 flex items-center p-0"
+                  className="m-0 flex items-center p-0 "
                 >
-                  <button type="submit" className="m-0 bg-transparent p-0">
+                  <button
+                    type="submit"
+                    className="m-0 bg-transparent p-0 text-gray-300 "
+                  >
                     <RiLogoutCircleRLine />
                   </button>
                 </Form>
@@ -139,51 +182,6 @@ export default function App() {
             )}
           </div>
         </div>
-        {/* <div className="absolute bottom-4 w-full text-center">
-          <div
-            className={`relative inline-grid ${
-              user ? "grid-cols-4" : "grid-cols-3"
-            } gap-5 rounded-md bg-black bg-opacity-80 px-8 py-2 text-2xl text-white md:px-10 md:py-3 md:text-3xl`}
-          >
-            <Tooltip text="Home">
-              <Link to="/">
-                <RiHomeLine />
-              </Link>
-            </Tooltip>
-
-            <Tooltip text="Saved">
-              <Link to="/dashboard/saved">
-                <RiHeart3Line />
-              </Link>
-            </Tooltip>
-            {user && (
-              <Tooltip text="Logout">
-                <Form
-                  action="/logout"
-                  method="post"
-                  className="m-0 flex items-center p-0"
-                >
-                  <button type="submit" className="m-0 bg-transparent p-0">
-                    <RiLogoutCircleRLine />
-                  </button>
-                </Form>
-              </Tooltip>
-            )}
-            {user ? (
-              <Tooltip text="Dashboard">
-                <Link to="/dashboard">
-                  <RiUser3Line />
-                </Link>
-              </Tooltip>
-            ) : (
-              <Tooltip text="Login">
-                <Link to="/login">
-                  <RiLoginCircleLine />
-                </Link>
-              </Tooltip>
-            )}
-          </div>
-        </div> */}
 
         <ScrollRestoration />
         <Scripts />

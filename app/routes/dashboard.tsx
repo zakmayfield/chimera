@@ -14,8 +14,6 @@ export default function DashboardPage() {
   const data = useLoaderData<typeof loader>();
   const { user } = data;
 
-  console.log(user);
-
   return (
     <div>
       Hello, {user?.name}
