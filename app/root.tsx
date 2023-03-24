@@ -126,7 +126,7 @@ export default function App() {
               </NavLink>
             </Tooltip>
 
-            <Tooltip text="Saved">
+            {/* <Tooltip text="Saved">
               <NavLink
                 to="/dashboard/saved"
                 className={({ isActive }) =>
@@ -135,7 +135,7 @@ export default function App() {
               >
                 <RiHeart3Line />
               </NavLink>
-            </Tooltip>
+            </Tooltip> */}
 
             {!user && (
               <Tooltip text="Login">
@@ -150,8 +150,7 @@ export default function App() {
               </Tooltip>
             )}
 
-            {/* leaving this Dashboard tooltip commented out, NavLink is causing the 'active' state of /dashboard & /dashboard/saved to both be active, (since saved is a nested route of dashboard i assume) */}
-            {/* {user && (
+            {user && (
               <Tooltip text="Dashboard">
                 <NavLink
                   to="/dashboard"
@@ -162,7 +161,7 @@ export default function App() {
                   <RiUser3Line />
                 </NavLink>
               </Tooltip>
-            )} */}
+            )}
 
             {/* for development i will add a logout button in the nav for ease of use, i dont think i want the log out button on the nav */}
             {user && (
