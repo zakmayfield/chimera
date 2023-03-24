@@ -10,7 +10,6 @@ import * as React from "react";
 import { badRequest } from "~/utils/utils";
 import { redirect } from "@remix-run/node";
 
-
 export async function loader({ request }: LoaderArgs) {
   return {
     data: true,
@@ -23,13 +22,11 @@ export async function action({ request }: ActionArgs) {
 
   if (typeof search !== "string" || search.length === 0) {
     return badRequest({
-      searchErrors: {
-        search: "Search entry required",
-      },
+      searchError: "Search entry required",
     });
   }
 
-  return redirect(`/pets/${search}`)
+  return redirect(`/pets/${search}`);
 }
 
 export default function Index() {
@@ -37,8 +34,7 @@ export default function Index() {
   const searchRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
-    if (actionData) {
-      console.log("action data", actionData);
+    if (actionData?.searchError) {
       searchRef.current?.focus();
     }
   }, [actionData]);
@@ -84,7 +80,7 @@ export default function Index() {
                     aria-describedby="search-error"
                     className="w-full rounded-md border border-gray-500 px-2 py-2 text-lg"
                   />
-                  <button className="mt-2 w-2/4 rounded border border-white bg-transparent py-2 px-4 font-semibold text-white hover:border-transparent hover:bg-blue-400 hover:text-white mx-auto">
+                  <button className="mx-auto mt-2 w-2/4 rounded border border-white bg-transparent py-2 px-4 font-semibold text-white hover:border-transparent hover:bg-blue-400 hover:text-white">
                     Search
                   </button>
                 </Form>
