@@ -101,14 +101,14 @@ export default function App() {
         <div className="absolute bottom-4 w-full text-center">
           <div
             className={`relative inline-grid ${
-              user ? "grid-cols-5" : "grid-cols-4"
+              user ? "grid-cols-4" : "grid-cols-4"
             } gap-5 rounded-md bg-black bg-opacity-80 px-8 py-2 text-2xl text-white md:px-10 md:py-3 md:text-3xl`}
           >
             <Tooltip text="Home">
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  isActive ? "text-3xl text-white" : "text-gray-300"
+                  isActive ? "text-3xl text-white" : "text-gray-400"
                 }
               >
                 <RiHomeLine />
@@ -119,7 +119,7 @@ export default function App() {
               <NavLink
                 to="/pets"
                 className={({ isActive }) =>
-                  isActive ? "text-3xl text-white" : "text-gray-300"
+                  isActive ? "text-3xl text-white" : "text-gray-400"
                 }
               >
                 <MdPets />
@@ -130,7 +130,7 @@ export default function App() {
               <NavLink
                 to="/dashboard/saved"
                 className={({ isActive }) =>
-                  isActive ? "text-3xl text-white" : "text-gray-300"
+                  isActive ? "text-3xl text-white" : "text-gray-400"
                 }
               >
                 <RiHeart3Line />
@@ -142,7 +142,7 @@ export default function App() {
                 <NavLink
                   to="/login"
                   className={({ isActive }) =>
-                    isActive ? "text-3xl text-white" : "text-gray-300"
+                    isActive ? "text-3xl text-white" : "text-gray-400"
                   }
                 >
                   <RiLoginCircleLine />
@@ -150,18 +150,19 @@ export default function App() {
               </Tooltip>
             )}
 
-            {user && (
+            {/* leaving this Dashboard tooltip commented out, NavLink is causing the 'active' state of /dashboard & /dashboard/saved to both be active, (since saved is a nested route of dashboard i assume) */}
+            {/* {user && (
               <Tooltip text="Dashboard">
                 <NavLink
                   to="/dashboard"
                   className={({ isActive }) =>
-                    isActive ? "text-3xl text-white" : "text-gray-300"
+                    isActive ? "text-3xl text-white" : "text-gray-400"
                   }
                 >
                   <RiUser3Line />
                 </NavLink>
               </Tooltip>
-            )}
+            )} */}
 
             {/* for development i will add a logout button in the nav for ease of use, i dont think i want the log out button on the nav */}
             {user && (
@@ -173,7 +174,7 @@ export default function App() {
                 >
                   <button
                     type="submit"
-                    className="m-0 bg-transparent p-0 text-gray-300 "
+                    className="m-0 bg-transparent p-0 text-gray-400 "
                   >
                     <RiLogoutCircleRLine />
                   </button>
