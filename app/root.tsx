@@ -101,7 +101,7 @@ export default function App() {
         <div className="absolute bottom-4 w-full text-center">
           <div
             className={`relative inline-grid ${
-              user ? "grid-cols-4" : "grid-cols-4"
+              user ? "grid-cols-4" : "grid-cols-3"
             } gap-5 rounded-md bg-black bg-opacity-80 px-8 py-2 text-2xl text-white md:px-10 md:py-3 md:text-3xl`}
           >
             <Tooltip text="Home">
