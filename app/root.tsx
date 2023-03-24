@@ -35,12 +35,11 @@ export const links: LinksFunction = () => {
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Remix Notes",
+  title: "Chimera",
   viewport: "width=device-width,initial-scale=1",
 });
 
 export async function loader({ request, params }: LoaderArgs) {
-  console.log("request url", request.url);
 
   return json({
     user: await getUser(request),

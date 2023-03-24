@@ -2,6 +2,7 @@ import { useMatches } from "@remix-run/react";
 import { useMemo } from "react";
 
 import type { User } from "~/models/user.server";
+import { json } from "@remix-run/node";
 
 const DEFAULT_REDIRECT = "/";
 
@@ -26,6 +27,8 @@ export function safeRedirect(
 
   return to;
 }
+
+export const badRequest = <T>(data: T) => json<T>(data, { status: 400 });
 
 /**
  * This base hook is used in other hooks to quickly search for specific data
