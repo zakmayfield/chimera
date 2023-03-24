@@ -10,6 +10,7 @@ export default function PetsPage() {
   return (
     <div>
       Pets page
+      <p>available pets will be listed here for adoption</p>
     </div>
   )
 }
