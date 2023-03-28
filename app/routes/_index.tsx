@@ -29,7 +29,7 @@ export async function action({ request }: ActionArgs) {
   return redirect(`/pets/${search}`);
 }
 
-export default function Index() {
+export default function RootIndexPage() {
   const actionData = useActionData<typeof action>();
   const searchRef = React.useRef<HTMLInputElement>(null);
 
@@ -72,8 +72,8 @@ export default function Index() {
                     autoComplete="search"
                     // aria-invalid={actionData?.errors?.search ? true : undefined}
                     aria-describedby="search-error"
-                    placeholder='Try Border Collie, Cat, ect.'
-                    className="w-full rounded-md border border-gray-500 px-2 py-3 text-md"
+                    placeholder="Try Border Collie, Cat, ect."
+                    className="text-md w-full rounded-md border border-gray-500 px-2 py-3"
                   />
                   <button className="mx-auto mt-2 w-2/4 rounded border border-white bg-transparent py-2 px-4 font-semibold text-white hover:border-transparent hover:bg-blue-400 hover:text-white">
                     Search
