@@ -49,7 +49,7 @@ export default function Index() {
               {/* leaving this here for reference */}
               {/* <div className="absolute inset-0 bg-[color:rgba(0,0,0,0.4)] mix-blend-multiply sm:rounded-lg" /> */}
 
-              {/* title */}
+              {/* title content */}
               <div>
                 <h1 className="block text-center text-6xl font-extrabold uppercase tracking-tight text-white drop-shadow-md sm:text-7xl md:text-8xl lg:text-9xl">
                   Chimera
@@ -62,12 +62,6 @@ export default function Index() {
               {/* search input */}
               <div className="mt-5 px-5">
                 <Form method="post" className="flex flex-col">
-                  <label
-                    htmlFor="search"
-                    className="block text-sm font-medium text-black"
-                  >
-                    Try Collie, Cat, ect
-                  </label>
                   <input
                     ref={searchRef}
                     id="search"
