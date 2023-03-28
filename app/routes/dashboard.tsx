@@ -27,6 +27,8 @@ export default function DashboardPage() {
           </li>
         </ul>
 
+        
+
         <div>
           <Outlet />
         </div>
