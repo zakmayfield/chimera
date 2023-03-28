@@ -16,7 +16,6 @@ import {
 // import acme from "~/images/acme.png";
 import {
   RiHomeLine,
-  RiHeart3Line,
   RiLoginCircleLine,
   RiUser3Line,
   RiLogoutCircleRLine,
