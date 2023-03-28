@@ -84,17 +84,6 @@ export default function App() {
       </head>
       <body className="min-h-screen">
         <Outlet />
-        {/* <AnimatePresence mode='wait' initial={false}>
-          <motion.main
-            key={useLocation().pathname}
-            initial={{ x: "-10%", opacity: 0 }}
-            animate={{ x: "0", opacity: 1 }}
-            exit={{ y: "-10%", opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {outlet}
-          </motion.main>
-        </AnimatePresence> */}
 
         <div className="absolute bottom-4 w-full text-center">
           <div
