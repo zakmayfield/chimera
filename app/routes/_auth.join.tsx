@@ -148,7 +148,7 @@ export default function Join() {
       nameRef.current?.focus();
     } else if (actionData?.errors?.username) {
       usernameRef.current?.focus();
-    } 
+    }
   }, [actionData]);
 
   return (

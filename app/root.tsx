@@ -16,7 +16,6 @@ import {
 // import acme from "~/images/acme.png";
 import {
   RiHomeLine,
-  RiHeart3Line,
   RiLoginCircleLine,
   RiUser3Line,
   RiLogoutCircleRLine,
@@ -35,12 +34,11 @@ export const links: LinksFunction = () => {
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Remix Notes",
+  title: "Chimera",
   viewport: "width=device-width,initial-scale=1",
 });
 
 export async function loader({ request, params }: LoaderArgs) {
-  console.log("request url", request.url);
 
   return json({
     user: await getUser(request),
@@ -86,29 +84,18 @@ export default function App() {
       </head>
       <body className="min-h-screen">
         <Outlet />
-        {/* <AnimatePresence mode='wait' initial={false}>
-          <motion.main
-            key={useLocation().pathname}
-            initial={{ x: "-10%", opacity: 0 }}
-            animate={{ x: "0", opacity: 1 }}
-            exit={{ y: "-10%", opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {outlet}
-          </motion.main>
-        </AnimatePresence> */}
 
         <div className="absolute bottom-4 w-full text-center">
           <div
             className={`relative inline-grid ${
-              user ? "grid-cols-5" : "grid-cols-4"
+              user ? "grid-cols-4" : "grid-cols-3"
             } gap-5 rounded-md bg-black bg-opacity-80 px-8 py-2 text-2xl text-white md:px-10 md:py-3 md:text-3xl`}
           >
             <Tooltip text="Home">
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  isActive ? "text-3xl text-white" : "text-gray-300"
+                  isActive ? "text-3xl text-white" : "text-gray-400"
                 }
               >
                 <RiHomeLine />
@@ -119,30 +106,30 @@ export default function App() {
               <NavLink
                 to="/pets"
                 className={({ isActive }) =>
-                  isActive ? "text-3xl text-white" : "text-gray-300"
+                  isActive ? "text-3xl text-white" : "text-gray-400"
                 }
               >
                 <MdPets />
               </NavLink>
             </Tooltip>
 
-            <Tooltip text="Saved">
+            {/* <Tooltip text="Saved">
               <NavLink
                 to="/dashboard/saved"
                 className={({ isActive }) =>
-                  isActive ? "text-3xl text-white" : "text-gray-300"
+                  isActive ? "text-3xl text-white" : "text-gray-400"
                 }
               >
                 <RiHeart3Line />
               </NavLink>
-            </Tooltip>
+            </Tooltip> */}
 
             {!user && (
               <Tooltip text="Login">
                 <NavLink
                   to="/login"
                   className={({ isActive }) =>
-                    isActive ? "text-3xl text-white" : "text-gray-300"
+                    isActive ? "text-3xl text-white" : "text-gray-400"
                   }
                 >
                   <RiLoginCircleLine />
@@ -155,7 +142,7 @@ export default function App() {
                 <NavLink
                   to="/dashboard"
                   className={({ isActive }) =>
-                    isActive ? "text-3xl text-white" : "text-gray-300"
+                    isActive ? "text-3xl text-white" : "text-gray-400"
                   }
                 >
                   <RiUser3Line />
@@ -173,7 +160,7 @@ export default function App() {
                 >
                   <button
                     type="submit"
-                    className="m-0 bg-transparent p-0 text-gray-300 "
+                    className="m-0 bg-transparent p-0 text-gray-400 "
                   >
                     <RiLogoutCircleRLine />
                   </button>
