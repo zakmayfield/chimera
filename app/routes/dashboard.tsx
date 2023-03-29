@@ -23,7 +23,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-5">
         <ul className="border-2">
           <li className="rounded-md">
-            <Link to="pets" >
+            <Link to="pets/listed" >
               Pets
             </Link>
           </li>
