@@ -16,20 +16,24 @@ export default function DashboardPage() {
 
   return (
     <div>
-      Hello, {user?.name}
-      <div>
-        <ul className="flex gap-5">
-          <li>
-            <Link to="pets">Pets</Link>
+      <div className="py-5 text-center">
+        <h3>Hello, {user?.name}</h3>
+      </div>
+
+      <div className="grid grid-cols-5">
+        <ul className="border-2">
+          <li className="rounded-md">
+            <Link to="pets" >
+              Pets
+            </Link>
           </li>
-          <li>
+
+          <li className="rounded-md">
             <Link to="account">Account</Link>
           </li>
         </ul>
 
-        
-
-        <div>
+        <div className="col-span-4 border-2">
           <Outlet />
         </div>
       </div>
