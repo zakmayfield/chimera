@@ -46,7 +46,6 @@ export default function RootIndexPage() {
           {/* Landing page top content */}
           <div className="relative sm:p-8 sm:pb-0">
             <div className="relative mx-auto max-w-screen-xl bg-[url('~/images/dogs.jpg')] bg-cover bg-center py-20 sm:rounded-lg sm:py-28 lg:py-32">
-              {/* leaving this here for reference */}
               <div className="absolute inset-0 bg-[color:rgba(0,0,0,0.4)] mix-blend-multiply sm:rounded-lg" />
 
               {/* title content */}
