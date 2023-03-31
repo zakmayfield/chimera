@@ -43,12 +43,6 @@ const DropdownMenu = () => {
   );
 };
 
-const MiniPetsMunu = () => {
-  return (
-    <div></div>
-  )
-}
-
 const Menu = () => {
   return (
     <div className="px-5 py-2">
@@ -103,18 +97,6 @@ export default function DashboardPage() {
       <div className="grid sm:grid-cols-5">
         {/* dashboard menu */}
         <Menu />
-
-        {/* <ul className="border-2">
-          <li className="rounded-md">
-            <Link to="pets/listed" >
-              Pets
-            </Link>
-          </li>
-
-          <li className="rounded-md">
-            <Link to="account">Account</Link>
-          </li>
-        </ul> */}
 
         <div className="border-2 sm:col-span-4">
           <Outlet />
