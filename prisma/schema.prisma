@@ -16,17 +16,16 @@ model User {
   bio      String?
   type     AccountType @default(DEFAULT)
 
+  contact      Contact?
+  address      Address[]
+  password     Password?
+  savedPets    SavedPetRecord[]
+  organization Organization?
+  // notes will be kept in tact until new models and routes have been created
+  notes        Note[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  password Password?
-
-  savedPets SavedPetRecord[]
-
-  address Address[]
-  contact Contact?
-  // notes will be kept in tact until new models and routes have been created
-  notes   Note[]
 }
 
 model Password {
@@ -50,6 +49,9 @@ model Organization {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
 }
 
 // Note model will stay in tact til a bit later in development

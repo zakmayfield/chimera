@@ -90,91 +90,91 @@ async function seed() {
           hash: hashedPassword,
         },
       },
-      pets: {
-        create: [
-          {
-            name: "Gloopus",
-            species: "DOG",
-            bio: "Gloopus is a fantastic dog who likes to run fast and go far. Always reaching for the horizon.",
-            description: "Gloopus the fantastic dog.",
-            age: "YOUNG",
-            sex: "MALE",
-            size: "LG",
-            coat: "SHORT",
-            status: "ADOPTABLE",
+      // pets: {
+      //   create: [
+      //     {
+      //       name: "Gloopus",
+      //       species: "DOG",
+      //       bio: "Gloopus is a fantastic dog who likes to run fast and go far. Always reaching for the horizon.",
+      //       description: "Gloopus the fantastic dog.",
+      //       age: "YOUNG",
+      //       sex: "MALE",
+      //       size: "LG",
+      //       coat: "SHORT",
+      //       status: "ADOPTABLE",
 
-            colors: {
-              create: {
-                primary: "white",
-              },
-            },
-            attributes: {
-              create: {
-                isHouseTrained: true,
-                hasCurrentShots: true,
-              },
-            },
-            environment: {
-              create: {
-                cats: true,
-                dogs: true,
-                children: true,
-              },
-            },
-          },
-          {
-            name: "Ham",
-            species: "CAT",
-            bio: "Ham is a great cat who likes to chase lasers and perch up high.",
-            description: "Ham the energetic cat.",
-            age: "ADULT",
-            sex: "FEMALE",
-            size: "SM",
-            coat: "MEDIUM",
-            status: "ADOPTABLE",
+      //       colors: {
+      //         create: {
+      //           primary: "white",
+      //         },
+      //       },
+      //       attributes: {
+      //         create: {
+      //           isHouseTrained: true,
+      //           hasCurrentShots: true,
+      //         },
+      //       },
+      //       environment: {
+      //         create: {
+      //           cats: true,
+      //           dogs: true,
+      //           children: true,
+      //         },
+      //       },
+      //     },
+      //     {
+      //       name: "Ham",
+      //       species: "CAT",
+      //       bio: "Ham is a great cat who likes to chase lasers and perch up high.",
+      //       description: "Ham the energetic cat.",
+      //       age: "ADULT",
+      //       sex: "FEMALE",
+      //       size: "SM",
+      //       coat: "MEDIUM",
+      //       status: "ADOPTABLE",
 
-            colors: {
-              create: {
-                primary: "orange",
-                secondary: "white",
-              },
-            },
-            attributes: {
-              create: {
-                isHouseTrained: true,
-                hasCurrentShots: true,
-              },
-            },
-            environment: {
-              create: {
-                dogs: true,
-              },
-            },
-          },
-          {
-            name: "Rusty",
-            species: "HORSE",
-            bio: "Rusty is an awesome horse who likes to eat hay.",
-            description: "Rusty the lovely horse.",
-            age: "YOUNG",
-            sex: "MALE",
-            status: "ADOPTABLE",
+      //       colors: {
+      //         create: {
+      //           primary: "orange",
+      //           secondary: "white",
+      //         },
+      //       },
+      //       attributes: {
+      //         create: {
+      //           isHouseTrained: true,
+      //           hasCurrentShots: true,
+      //         },
+      //       },
+      //       environment: {
+      //         create: {
+      //           dogs: true,
+      //         },
+      //       },
+      //     },
+      //     {
+      //       name: "Rusty",
+      //       species: "HORSE",
+      //       bio: "Rusty is an awesome horse who likes to eat hay.",
+      //       description: "Rusty the lovely horse.",
+      //       age: "YOUNG",
+      //       sex: "MALE",
+      //       status: "ADOPTABLE",
 
-            colors: {
-              create: {
-                primary: "brown",
-                secondary: "black",
-                tertiary: "white",
-              },
-            },
-            attributes: {
-              create: {
-                hasCurrentShots: true,
-              },
-            },
-          },
-        ],
-      },
+      //       colors: {
+      //         create: {
+      //           primary: "brown",
+      //           secondary: "black",
+      //           tertiary: "white",
+      //         },
+      //       },
+      //       attributes: {
+      //         create: {
+      //           hasCurrentShots: true,
+      //         },
+      //       },
+      //     },
+      //   ],
+      // },
       contact: {
         create: {
           email: userData.email,
