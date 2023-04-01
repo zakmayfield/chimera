@@ -2,7 +2,7 @@ import type { LoaderArgs } from "@remix-run/server-runtime";
 import { getUser } from "~/models/user.server";
 import { requireUserId } from "~/utils/session.server";
 import { json } from "@remix-run/node";
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
+import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import { AiOutlineDownCircle } from "react-icons/ai";
 import { useRef, useState } from "react";
 
@@ -33,9 +33,9 @@ const DropdownMenu = () => {
       >
         <ul className="m-0 list-none text-right">
           <li className="block border-b">
-            <Link to="/dashboard" className=" border-2 py-1 pl-5">
+            <NavLink to="/dashboard" className=" border-2 py-1 pl-5">
               HOME
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>
@@ -56,31 +56,32 @@ const Menu = () => {
       <nav>
         <ul className="flex w-full flex-col gap-2">
           <li>
-            <Link
+            <NavLink
               to="/dashboard"
-              className="block w-full rounded-xl py-3 pl-4 text-sm hover:bg-blue-500 hover:text-white"
+              className={({ isActive }) => `block w-full rounded-xl py-3 pl-4 text-sm hover:bg-blue-500 hover:text-white ${isActive ? 'bg-blue-500 text-white' : ''}`}
+              end
             >
               <span className="mr-2">❖</span>
               Home
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
+            <NavLink
               to="pets/listed"
-              className="block w-full rounded-xl py-3 pl-4 text-sm hover:bg-blue-500 hover:text-white"
+              className={({ isActive }) => `block w-full rounded-xl py-3 pl-4 text-sm hover:bg-blue-500 hover:text-white ${isActive ? 'bg-blue-500 text-white' : ''}`}
             >
               <span className="mr-2">❤︎</span>
               Pets
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link
+            <NavLink
               to="account"
-              className="block w-full rounded-xl py-3 pl-4 text-sm hover:bg-blue-500 hover:text-white"
+              className={({ isActive }) => `block w-full rounded-xl py-3 pl-4 text-sm hover:bg-blue-500 hover:text-white ${isActive ? 'bg-blue-500 text-white' : ''}`}
             >
               <span className="mr-2">⚙︎</span>
               Account
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>
