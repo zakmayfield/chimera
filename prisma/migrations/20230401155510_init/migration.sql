@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "AccountType" AS ENUM ('DEFAULT', 'VOLUNTEER', 'AGENCY');
+CREATE TYPE "AccountType" AS ENUM ('DEFAULT', 'ORGANIZATION');
 
 -- CreateEnum
 CREATE TYPE "Species" AS ENUM ('CAT', 'DOG', 'BIRD', 'HORSE', 'FISH', 'REPTILE', 'BARNYARD');
@@ -43,6 +43,20 @@ CREATE TABLE "Password" (
 );
 
 -- CreateTable
+CREATE TABLE "Organization" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "bio" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "Organization_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Note" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
@@ -64,6 +78,7 @@ CREATE TABLE "Address" (
     "zip" TEXT NOT NULL,
     "country" VARCHAR(100) NOT NULL,
     "userId" TEXT,
+    "organizationId" TEXT,
 
     CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
 );
@@ -71,8 +86,8 @@ CREATE TABLE "Address" (
 -- CreateTable
 CREATE TABLE "Contact" (
     "id" TEXT NOT NULL,
-    "email" VARCHAR(75),
     "userId" TEXT,
+    "organizationId" TEXT,
 
     CONSTRAINT "Contact_pkey" PRIMARY KEY ("id")
 );
@@ -98,7 +113,7 @@ CREATE TABLE "Pet" (
     "size" "Size" NOT NULL DEFAULT 'UNKNOWN',
     "coat" "Coat" NOT NULL DEFAULT 'UNKNOWN',
     "status" "Status" NOT NULL DEFAULT 'HOLD',
-    "orgId" TEXT NOT NULL,
+    "organizationId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -192,10 +207,25 @@ CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 CREATE UNIQUE INDEX "Password_userId_key" ON "Password"("userId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Organization_email_key" ON "Organization"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Organization_username_key" ON "Organization"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Organization_userId_key" ON "Organization"("userId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Address_userId_key" ON "Address"("userId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Address_organizationId_key" ON "Address"("organizationId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Contact_userId_key" ON "Contact"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Contact_organizationId_key" ON "Contact"("organizationId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Colors_petId_key" ON "Colors"("petId");
@@ -210,19 +240,28 @@ CREATE UNIQUE INDEX "Environment_petId_key" ON "Environment"("petId");
 ALTER TABLE "Password" ADD CONSTRAINT "Password_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Organization" ADD CONSTRAINT "Organization_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Note" ADD CONSTRAINT "Note_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Address" ADD CONSTRAINT "Address_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Address" ADD CONSTRAINT "Address_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Contact" ADD CONSTRAINT "Contact_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Contact" ADD CONSTRAINT "Contact_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Phone" ADD CONSTRAINT "Phone_contactId_fkey" FOREIGN KEY ("contactId") REFERENCES "Contact"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Pet" ADD CONSTRAINT "Pet_orgId_fkey" FOREIGN KEY ("orgId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Pet" ADD CONSTRAINT "Pet_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES "Organization"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Colors" ADD CONSTRAINT "Colors_petId_fkey" FOREIGN KEY ("petId") REFERENCES "Pet"("id") ON DELETE CASCADE ON UPDATE CASCADE;
