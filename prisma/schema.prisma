@@ -10,7 +10,6 @@ generator client {
 model User {
   id String @id @default(cuid())
 
-  // add name, username & type attributes to various forms and inputs, ect
   name     String
   email    String      @unique
   username String?     @unique
@@ -22,7 +21,6 @@ model User {
 
   password Password?
 
-  pets      Pet[]
   savedPets SavedPetRecord[]
 
   address Address[]
@@ -36,6 +34,22 @@ model Password {
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String @unique
+}
+
+model Organization {
+  id String @id @default(cuid())
+
+  name     String
+  email    String @unique
+  username String @unique
+  bio      String
+
+  pets    Pet[]
+  address Address[]
+  contact Contact?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // Note model will stay in tact til a bit later in development
@@ -61,19 +75,23 @@ model Address {
   zip       String
   country   String  @db.VarChar(100)
 
-  user User? @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-
+  user   User?   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   userId String? @unique
+
+  organization   Organization? @relation(fields: [organizationId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  organizationId String?       @unique
 }
 
 model Contact {
   id String @id @default(uuid())
 
   phones Phone[]
-  email  String? @db.VarChar(75)
 
   user   User?   @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   userId String? @unique
+
+  organization   Organization? @relation(fields: [organizationId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  organizationId String?       @unique
 }
 
 model Phone {
@@ -86,8 +104,7 @@ model Phone {
 
 enum AccountType {
   DEFAULT
-  VOLUNTEER
-  AGENCY
+  ORGANIZATION
 }
 
 model Pet {
@@ -110,8 +127,8 @@ model Pet {
   breeds      BreedsToPets[]
   savedBy     SavedPetRecord[]
 
-  org   User   @relation(fields: [orgId], references: [id])
-  orgId String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -128,7 +145,7 @@ enum Species {
 }
 
 enum Age {
-  YOUNG
+  YOUNG // UI -> puppy, kitten, ect based on species
   ADULT
   SENIOR
   UNKNOWN
