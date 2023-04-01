@@ -8,6 +8,8 @@ import { createUserSession, getUserId } from "~/utils/session.server";
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils/utils";
 
+import { AccountType } from "@prisma/client";
+
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);
   if (userId) return redirect("/");
@@ -16,10 +18,11 @@ export async function loader({ request }: LoaderArgs) {
 
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
-  const name = formData.get("name");
-  const username = formData.get("username");
-  const email = formData.get("email");
-  const password = formData.get("password");
+  const name = formData.get("name")
+  const username = formData.get("username")
+  const email = formData.get("email")
+  const password = formData.get("password")
+  const type = formData.get("type") as string
 
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
 
@@ -98,6 +101,21 @@ export async function action({ request }: ActionArgs) {
     );
   }
 
+  if (type && !(type in AccountType)) {
+    return json(
+      {
+        errors: {
+          name: null,
+          username: null,
+          email: null,
+          password: null,
+          type: "Invalid account type",
+        },
+      },
+      { status: 400 }
+    );
+  }
+
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
     return json(
@@ -138,6 +156,7 @@ export default function Join() {
   const usernameRef = React.useRef<HTMLInputElement>(null);
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
+  const typeRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     if (actionData?.errors?.email) {
@@ -148,6 +167,8 @@ export default function Join() {
       nameRef.current?.focus();
     } else if (actionData?.errors?.username) {
       usernameRef.current?.focus();
+    } else if (actionData?.errors?.type) {
+      typeRef.current?.focus();
     }
   }, [actionData]);
 
