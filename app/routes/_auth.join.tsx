@@ -10,6 +10,12 @@ import { safeRedirect, validateEmail } from "~/utils/utils";
 
 import { AccountType } from "@prisma/client";
 
+export const meta: MetaFunction = () => {
+  return {
+    title: "Sign Up",
+  };
+};
+
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);
   if (userId) return redirect("/");
@@ -141,12 +147,6 @@ export async function action({ request }: ActionArgs) {
     redirectTo,
   });
 }
-
-export const meta: MetaFunction = () => {
-  return {
-    title: "Sign Up",
-  };
-};
 
 export default function Join() {
   const [searchParams] = useSearchParams();

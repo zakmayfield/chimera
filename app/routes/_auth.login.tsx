@@ -7,6 +7,12 @@ import { verifyLogin } from "~/models/user.server";
 import { createUserSession, getUserId } from "~/utils/session.server";
 import { safeRedirect, validateEmail } from "~/utils/utils";
 
+export const meta: MetaFunction = () => {
+  return {
+    title: "Log In",
+  };
+};
+
 export async function loader({ request }: LoaderArgs) {
   const userId = await getUserId(request);
   if (userId) return redirect("/");
@@ -57,12 +63,6 @@ export async function action({ request }: ActionArgs) {
     redirectTo,
   });
 }
-
-export const meta: MetaFunction = () => {
-  return {
-    title: "Login",
-  };
-};
 
 export default function LoginPage() {
   const [searchParams] = useSearchParams();
