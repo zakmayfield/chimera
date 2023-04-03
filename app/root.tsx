@@ -10,7 +10,6 @@ import {
   ScrollRestoration,
   NavLink,
   // useLoaderData,
-  // useLoaderData,
 } from "@remix-run/react";
 
 // import acme from "~/images/acme.png";
