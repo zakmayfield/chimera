@@ -18,11 +18,11 @@ export async function loader({ request }: LoaderArgs) {
 
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
-  const name = formData.get("name")
-  const username = formData.get("username")
-  const email = formData.get("email")
-  const password = formData.get("password")
-  const type = formData.get("type") as string
+  const name = formData.get("name");
+  const username = formData.get("username");
+  const email = formData.get("email");
+  const password = formData.get("password");
+  const type = formData.get("type") as string;
 
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
 
@@ -132,6 +132,8 @@ export async function action({ request }: ActionArgs) {
     );
   }
 
+  // adding 'type' to createUser will throw because createUser is expecting type to be of AccountType
+  // Argument of type 'string' is not assignable to parameter of type 'AccountType'.
   const user = await createUser(name, username, email, password);
 
   return createUserSession({
@@ -156,7 +158,8 @@ export default function Join() {
   const usernameRef = React.useRef<HTMLInputElement>(null);
   const emailRef = React.useRef<HTMLInputElement>(null);
   const passwordRef = React.useRef<HTMLInputElement>(null);
-  const typeRef = React.useRef<HTMLInputElement>(null);
+  const typeRef = React.useRef<HTMLSelectElement>(null);
+  const [selectedOption, setSelectedOption] = React.useState("");
 
   React.useEffect(() => {
     if (actionData?.errors?.email) {
@@ -172,10 +175,29 @@ export default function Join() {
     }
   }, [actionData]);
 
+  const handleOptionChange = (event: any) => {
+    setSelectedOption(event.target.value);
+  };
+
   return (
     <div className="flex min-h-full flex-col justify-center">
       <div className="mx-auto w-full max-w-md px-8">
         <Form method="post" className="space-y-6" noValidate>
+          <input type="hidden" name="redirectTo" value={redirectTo} />
+
+          <div>
+            <label htmlFor="type">I am looking to: </label>
+            <select
+              id="type"
+              value={selectedOption}
+              onChange={handleOptionChange}
+            >
+              <option value="">Select</option>
+              <option value="DEFAULT">Adopt</option>
+              <option value="ORGANIZATION">Organization</option>
+            </select>
+          </div>
+
           <div>
             <label
               htmlFor="name"
@@ -284,7 +306,6 @@ export default function Join() {
             </div>
           </div>
 
-          <input type="hidden" name="redirectTo" value={redirectTo} />
           <button
             type="submit"
             className="w-full rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"

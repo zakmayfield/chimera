@@ -14,7 +14,7 @@ export async function getUser(id: User["id"]) {
     include: {
       address: true,
       contact: true,
-      pets: true,
+      organization: true,
       savedPets: {
         select: {
           pet: true
