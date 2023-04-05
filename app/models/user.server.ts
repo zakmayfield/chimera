@@ -14,7 +14,7 @@ export async function getUser(id: User["id"]) {
     include: {
       address: true,
       contact: true,
-      pets: true,
+      organization: true,
       savedPets: {
         select: {
           pet: true
@@ -32,7 +32,8 @@ export async function createUser(
   name: User["name"],
   username: User["username"],
   email: User["email"],
-  password: Password["hash"]
+  password: Password["hash"],
+  type: User['type']
 ) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -41,6 +42,7 @@ export async function createUser(
       name,
       username,
       email,
+      type,
       password: {
         create: {
           hash: hashedPassword,
