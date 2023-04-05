@@ -3,6 +3,8 @@ import { redirect } from "@remix-run/node";
 
 import { logout } from "~/utils/session.server";
 
+// look into what this file is called, only using action and loader
+
 export async function action({ request }: ActionArgs) {
   return logout(request);
 }
