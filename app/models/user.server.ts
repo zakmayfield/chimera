@@ -14,7 +14,11 @@ export async function getUser(id: User["id"]) {
     include: {
       address: true,
       contact: true,
-      organization: true,
+      organization: {
+        include: {
+          pets: true
+        }
+      },
       savedPets: {
         select: {
           pet: true
