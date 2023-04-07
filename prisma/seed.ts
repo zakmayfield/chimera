@@ -66,7 +66,7 @@ async function seed() {
     username: "searingheart",
     email: "email-1@email.com",
     password: "123",
-    type: AccountType.AGENCY,
+    type: AccountType.ORGANIZATION,
     bio: "Organization dedicated to pet rehoming",
   };
   const { name, username, email, password, type, bio } = userData;
@@ -90,94 +90,101 @@ async function seed() {
           hash: hashedPassword,
         },
       },
-      pets: {
-        create: [
-          {
-            name: "Gloopus",
-            species: "DOG",
-            bio: "Gloopus is a fantastic dog who likes to run fast and go far. Always reaching for the horizon.",
-            description: "Gloopus the fantastic dog.",
-            age: "YOUNG",
-            sex: "MALE",
-            size: "LG",
-            coat: "SHORT",
-            status: "ADOPTABLE",
+      organization: {
+        create: {
+          name: "Dragons Den",
+          email: "email-1-org@email.com",
+          username: "dragonsden",
+          bio: "Dragons Den is a family owned organization.",
+          pets: {
+            create: [
+              {
+                name: "Gloopus",
+                species: "DOG",
+                bio: "Gloopus is a fantastic dog who likes to run fast and go far. Always reaching for the horizon.",
+                description: "Gloopus the fantastic dog.",
+                age: "YOUNG",
+                sex: "MALE",
+                size: "LG",
+                coat: "SHORT",
+                status: "ADOPTABLE",
 
-            colors: {
-              create: {
-                primary: "white",
+                colors: {
+                  create: {
+                    primary: "white",
+                  },
+                },
+                attributes: {
+                  create: {
+                    isHouseTrained: true,
+                    hasCurrentShots: true,
+                  },
+                },
+                environment: {
+                  create: {
+                    cats: true,
+                    dogs: true,
+                    children: true,
+                  },
+                },
               },
-            },
-            attributes: {
-              create: {
-                isHouseTrained: true,
-                hasCurrentShots: true,
-              },
-            },
-            environment: {
-              create: {
-                cats: true,
-                dogs: true,
-                children: true,
-              },
-            },
-          },
-          {
-            name: "Ham",
-            species: "CAT",
-            bio: "Ham is a great cat who likes to chase lasers and perch up high.",
-            description: "Ham the energetic cat.",
-            age: "ADULT",
-            sex: "FEMALE",
-            size: "SM",
-            coat: "MEDIUM",
-            status: "ADOPTABLE",
+              {
+                name: "Ham",
+                species: "CAT",
+                bio: "Ham is a great cat who likes to chase lasers and perch up high.",
+                description: "Ham the energetic cat.",
+                age: "ADULT",
+                sex: "FEMALE",
+                size: "SM",
+                coat: "MEDIUM",
+                status: "ADOPTABLE",
 
-            colors: {
-              create: {
-                primary: "orange",
-                secondary: "white",
+                colors: {
+                  create: {
+                    primary: "orange",
+                    secondary: "white",
+                  },
+                },
+                attributes: {
+                  create: {
+                    isHouseTrained: true,
+                    hasCurrentShots: true,
+                  },
+                },
+                environment: {
+                  create: {
+                    dogs: true,
+                  },
+                },
               },
-            },
-            attributes: {
-              create: {
-                isHouseTrained: true,
-                hasCurrentShots: true,
-              },
-            },
-            environment: {
-              create: {
-                dogs: true,
-              },
-            },
-          },
-          {
-            name: "Rusty",
-            species: "HORSE",
-            bio: "Rusty is an awesome horse who likes to eat hay.",
-            description: "Rusty the lovely horse.",
-            age: "YOUNG",
-            sex: "MALE",
-            status: "ADOPTABLE",
+              {
+                name: "Rusty",
+                species: "HORSE",
+                bio: "Rusty is an awesome horse who likes to eat hay.",
+                description: "Rusty the lovely horse.",
+                age: "YOUNG",
+                sex: "MALE",
+                status: "ADOPTABLE",
 
-            colors: {
-              create: {
-                primary: "brown",
-                secondary: "black",
-                tertiary: "white",
+                colors: {
+                  create: {
+                    primary: "brown",
+                    secondary: "black",
+                    tertiary: "white",
+                  },
+                },
+                attributes: {
+                  create: {
+                    hasCurrentShots: true,
+                  },
+                },
               },
-            },
-            attributes: {
-              create: {
-                hasCurrentShots: true,
-              },
-            },
+            ],
           },
-        ],
+        },
       },
       contact: {
         create: {
-          email: userData.email,
           phones: {
             create: [
               {
